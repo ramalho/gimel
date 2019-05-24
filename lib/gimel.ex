@@ -50,6 +50,12 @@ defmodule Gimel do
     end)
   end
 
+  @external_resource "priv/UnicodeData.txt"
+  @unicodedata File.stream!("priv/UnicodeData.txt")
+  def load_data() do
+    build_indices(@unicodedata)
+  end
+
   @doc """
   Returns set of characters with all query words in their names.
   """
@@ -72,15 +78,4 @@ defmodule Gimel do
       []
     end
   end
-
-  def main(arg_list) do
-    query = Enum.join(arg_list, " ")
-    {word_idx, _char_idx} =
-      Path.join(:code.priv_dir(:gimel), "UnicodeData.txt")
-      |> File.stream!()
-      |> build_indices()
-    search(word_idx, query)
-  end
-
-
 end

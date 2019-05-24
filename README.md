@@ -1,22 +1,28 @@
 # Gimel
 
-**TODO: Add description**
+Run automated tests (excluding tests tagged `:slow`):
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `gimel` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:gimel, "~> 0.1.0"}
-  ]
-end
+```
+$ mix test
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/gimel](https://hexdocs.pm/gimel).
 
-# gimel
+Run all automated tests:
+
+```
+$ mix test --include slow
+```
+
+
+Manual testing of CLI:
+
+```
+$ mix run -e "Gimel.CLI.main()"
+```
+
+
+Build CLI script:
+
+```
+$ mix escript.build
+```
