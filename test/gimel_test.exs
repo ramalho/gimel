@@ -54,29 +54,29 @@ defmodule GimelTest do
                |> String.split(["\n", "\r", "\r\n"])
 
   test "build_indices" do
-    {word_idx, char_idx} = Gimel.build_indices(@sample_data)
-    assert char_idx[?7] == "DIGIT SEVEN"
+    {word_idx, code_idx} = Gimel.build_indices(@sample_data)
+    assert code_idx[?7] == "DIGIT SEVEN"
     assert word_idx["SEVEN"] == MapSet.new([?7])
     assert word_idx["DIGIT"] == MapSet.new([?7, ?8, ?9])
     assert word_idx["THAN"] == MapSet.new([?<, ?>])
   end
 
   test "search: single words" do
-    {word_idx, _char_idx} = Gimel.build_indices(@sample_data)
+    {word_idx, _code_idx} = Gimel.build_indices(@sample_data)
     assert Gimel.search(word_idx, "COLON") == [?:]
     assert Gimel.search(word_idx, "DIGIT") == [?7, ?8, ?9]
     assert Gimel.search(word_idx, "DOESNOTEXIST") == []
   end
 
   test "search: multiple words" do
-    {word_idx, _char_idx} = Gimel.build_indices(@sample_data)
+    {word_idx, _code_idx} = Gimel.build_indices(@sample_data)
     assert Gimel.search(word_idx, "SEVEN DIGIT") == [?7]
     assert Gimel.search(word_idx, "SIGN THAN") == [?<, ?>]
     assert Gimel.search(word_idx, "DOES NOT EXIST") == []
   end
 
   test "search: no words" do
-    {word_idx, _char_idx} = Gimel.build_indices(@sample_data)
+    {word_idx, _code_idx} = Gimel.build_indices(@sample_data)
     assert Gimel.search(word_idx, "") == []
     assert Gimel.search(word_idx, "-") == []
     assert Gimel.search(word_idx, "--") == []
@@ -85,7 +85,7 @@ defmodule GimelTest do
 
   @tag :slow
   test "search: full database" do
-    {word_idx, _char_idx} = Gimel.load_data()
+    {word_idx, _code_idx} = Gimel.load_data()
     result = Gimel.search(word_idx, "number eleven")
     assert result == [9322, 9342, 9362, 9451, 93835]
 

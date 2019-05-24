@@ -37,16 +37,16 @@ defmodule Gimel do
 
   @doc """
   Build indices: first maps each word to a set of characters,
-  second maps each character to its name.
+  second maps each character code to the character name.
   """
   def build_indices(lines) do
     word_idx = %{}
-    char_idx = %{}
-    indexes = {word_idx, char_idx}
+    code_idx = %{}
+    indexes = {word_idx, code_idx}
 
-    Enum.reduce(lines, indexes, fn line, {word_idx, char_idx} ->
+    Enum.reduce(lines, indexes, fn line, {word_idx, code_idx} ->
       {code, name, words} = parse(line)
-      {index(word_idx, code, words), Map.put(char_idx, code, name)}
+      {index(word_idx, code, words), Map.put(code_idx, code, name)}
     end)
   end
 
