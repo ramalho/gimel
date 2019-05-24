@@ -2,6 +2,13 @@
 
 Utility to search Unicode characters by words in their names.
 
+This is the third version in Elixir. The key feature of this implementation is the use of an inverted index mapping each word to all the characters that have that word in their name in `UnicodeData.txt`. The index is built only once per execution, so this works better in a long-running process.
+
+The previous implementation, [`rf.exs`](https://github.com/standupdev/rf/tree/master/elixir) is much simpler, but it reads and parses `UnicodeData.txt` every time.
+
+> Gimel or jeem is the third semitic letter. In Arabic: ج
+
+
 ## Using
 
 Run `gimel` to get a prompt for searching:
