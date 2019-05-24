@@ -89,4 +89,4 @@ Building `gimel` requires the `priv/UnicodeData.txt` file.
 
 Every year or so the **Unicode Consortium** publishes a new database, adding new characters. To update the local copy before building `gimel`, please fetch the current version from:
 
-[`ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt`](ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt)
+[`http://www.unicode.org/Public/UNIDATA/UnicodeData.txt`](http://www.unicode.org/Public/UNIDATA/UnicodeData.txt)
