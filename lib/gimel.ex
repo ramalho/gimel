@@ -51,7 +51,9 @@ defmodule Gimel do
   end
 
   @external_resource "priv/UnicodeData.txt"
-  @unicodedata File.stream!("priv/UnicodeData.txt")
+  @unicodedata File.read!("priv/UnicodeData.txt")
+               |> String.trim()
+               |> String.split(["\n", "\r", "\r\n"])
   def load_data() do
     build_indices(@unicodedata)
   end
