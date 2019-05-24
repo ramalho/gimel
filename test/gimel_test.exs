@@ -74,4 +74,15 @@ defmodule GimelTest do
     assert Gimel.search(word_idx, "SIGN THAN") == [?<, ?>]
     assert Gimel.search(word_idx, "DOES NOT EXIST") == []
   end
+
+  @tag :slow
+  test "main" do
+    result = Gimel.main(~w(number eleven))
+    assert result == [9322, 9342, 9362, 9451, 93835]
+    text =
+      result
+      |> Enum.map(&<<&1::utf8>>)
+      |> Enum.join(" ")
+    assert text == "⑪ ⑾ ⒒ ⓫ 𖺋"
+  end
 end

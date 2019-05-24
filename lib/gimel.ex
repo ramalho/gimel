@@ -14,7 +14,7 @@ defmodule Gimel do
   end
 
   @doc """
-  Parse line from UnicodeData.txt
+  Parse line from UnicodeData.txt.
   """
   def parse(line) do
     [code_str, name | _] = String.split(line, ";")
@@ -23,7 +23,7 @@ defmodule Gimel do
   end
 
   @doc """
-  Add character words to inverted index
+  Add character words to inverted index.
   """
   def index(inverted_index, char_code, words) do
     Enum.reduce(words, inverted_index, fn word, idx ->
@@ -72,4 +72,15 @@ defmodule Gimel do
       []
     end
   end
+
+  def main(arg_list) do
+    query = Enum.join(arg_list, " ")
+    {word_idx, _char_idx} =
+      Path.join(:code.priv_dir(:gimel), "UnicodeData.txt")
+      |> File.stream!()
+      |> build_indices()
+    search(word_idx, query)
+  end
+
+
 end
