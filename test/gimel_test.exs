@@ -75,6 +75,14 @@ defmodule GimelTest do
     assert Gimel.search(word_idx, "DOES NOT EXIST") == []
   end
 
+  test "search: no words" do
+    {word_idx, _char_idx} = Gimel.build_indices(@sample_data)
+    assert Gimel.search(word_idx, "") == []
+    assert Gimel.search(word_idx, "-") == []
+    assert Gimel.search(word_idx, "--") == []
+    assert Gimel.search(word_idx, "- -") == []
+  end
+
   @tag :slow
   test "search: full database" do
     {word_idx, _char_idx} = Gimel.load_data()

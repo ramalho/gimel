@@ -59,8 +59,11 @@ defmodule Gimel do
   @doc """
   Returns set of characters with all query words in their names.
   """
-  def search(inverted_index, query) do
-    [first | rest] = tokenize(query)
+  def search(inverted_index, query) when is_binary(query) do
+    search(inverted_index, tokenize(query))
+  end
+
+  def search(inverted_index, [first | rest]) do
     result_set = inverted_index[first]
 
     if result_set do
@@ -78,4 +81,6 @@ defmodule Gimel do
       []
     end
   end
+
+  def search(_, []), do: []
 end
