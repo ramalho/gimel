@@ -9,7 +9,7 @@ The previous implementation, [`rf.exs`](https://github.com/standupdev/rf/tree/ma
 > Gimel or jeem is the third semitic letter. In Arabic: ج
 
 
-## Using
+## Using the CLI app
 
 Run `gimel` to get a prompt for searching:
 
@@ -61,6 +61,45 @@ U+1F9EF	🧯	FIRE EXTINGUISHER
 Search: 
 ```
 
+## Building the CLI app
+
+Build standalone CLI script:
+
+```
+$ mix escript.build
+```
+
+Building `gimel` requires the `priv/UnicodeData.txt` file.
+
+Every year or so the **Unicode Consortium** publishes a new database, adding new characters. Before building a new release of `gimel`, please update the local copy of `UnicodeData.txt` inside `priv/`. The current database can be downloaded from:
+
+[`http://www.unicode.org/Public/UNIDATA/UnicodeData.txt`](http://www.unicode.org/Public/UNIDATA/UnicodeData.txt)
+
+
+## Web interface (WORK IN PROGRESS)
+
+A very primitive Web interface is available. For now, it only returns the characters found, not their codes and names like the CLI.
+
+Run the app like this:
+
+```
+$ iex -S mix run
+```
+
+or this:
+
+
+```
+$ mix run --no-halt
+```
+
+> **Question:** Which of the two ways above better? Is there a simpler way? Please tell me what you think: [Tweet @ramalhoorg](https://twitter.com/ramalhoorg) or [open an issue](https://github.com/standupdev/gimel) in the `gimel` repository.
+
+Then visit this URL to see 10 cat face emojis: [http://localhost:4000/search/cat-face](http://localhost:4000/search/cat-face).
+
+> **Note:** The query "cat-face" works because the `Gimel.tokenize` function changes all `"-"` to `" "` in the query. That is more readable than having `"cat%20face"` in the URL, and it also makes it easier to find characters names that may or may not have hyphens in them, like `"EM-DASH"`.
+
+
 ## Testing
 
 Run automated tests (excluding tests tagged `:slow`):
@@ -82,18 +121,3 @@ Manual testing of CLI:
 ```
 $ mix run -e "Gimel.CLI.main()"
 ```
-
-
-## Building
-
-Build standalone CLI script:
-
-```
-$ mix escript.build
-```
-
-Building `gimel` requires the `priv/UnicodeData.txt` file.
-
-Every year or so the **Unicode Consortium** publishes a new database, adding new characters. Before building a new release of `gimel`, please update the local copy of `UnicodeData.txt` inside `priv/`. The current database can be downloaded from:
-
-[`http://www.unicode.org/Public/UNIDATA/UnicodeData.txt`](http://www.unicode.org/Public/UNIDATA/UnicodeData.txt)
