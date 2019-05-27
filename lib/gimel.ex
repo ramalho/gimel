@@ -70,12 +70,13 @@ defmodule Gimel do
 
     if result_set do
       Enum.reduce_while(rest, result_set, fn word, result_set ->
-        new_set = MapSet.intersection(result_set, inverted_index[word])
+        new_set = inverted_index[word] || %MapSet{}
+        result_set = MapSet.intersection(result_set, new_set)
 
-        if MapSet.size(new_set) > 0 do
-          {:cont, new_set}
+        if MapSet.size(result_set) > 0 do
+          {:cont, result_set}
         else
-          {:halt, new_set}
+          {:halt, []}
         end
       end)
       |> Enum.sort()

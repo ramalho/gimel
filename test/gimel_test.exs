@@ -73,6 +73,7 @@ defmodule GimelTest do
     assert Gimel.search(word_idx, "SEVEN DIGIT") == [?7]
     assert Gimel.search(word_idx, "SIGN THAN") == [?<, ?>]
     assert Gimel.search(word_idx, "DOES NOT EXIST") == []
+    assert Gimel.search(word_idx, "DIGIT QAZWSX") == []
   end
 
   test "search: no words" do
