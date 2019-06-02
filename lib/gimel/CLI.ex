@@ -1,4 +1,8 @@
 defmodule Gimel.CLI do
+  @moduledoc """
+  Gimel command-line interface
+  """
+
   def show(code, code_idx) do
     char = <<code::utf8>>
 

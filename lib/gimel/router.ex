@@ -1,4 +1,7 @@
 defmodule Gimel.Router do
+  @moduledoc """
+  Gimel Web routes
+  """
   use Plug.Router
 
   plug(:match)

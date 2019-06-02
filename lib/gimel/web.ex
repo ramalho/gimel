@@ -1,4 +1,8 @@
 defmodule Gimel.Web do
+  @moduledoc """
+  Gimel Web application
+  """
+
   use Application
 
   def start(_type, _args) do

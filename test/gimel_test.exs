@@ -88,7 +88,7 @@ defmodule GimelTest do
   test "search: full database" do
     {word_idx, _code_idx} = Gimel.load_data()
     result = Gimel.search(word_idx, "number eleven")
-    assert result == [9322, 9342, 9362, 9451, 93835]
+    assert result == [9322, 9342, 9362, 9451, 93_835]
 
     text =
       result

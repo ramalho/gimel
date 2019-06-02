@@ -23,11 +23,12 @@ defmodule Gimel do
   end
 
   @doc """
-  Add character words to inverted index.
+  Add words of character name to inverted index.
   """
   def index(inverted_index, char_code, words) do
     Enum.reduce(words, inverted_index, fn word, idx ->
-      Map.get_and_update(idx, word, fn
+      idx
+      |> Map.get_and_update(word, fn
         nil -> {word, MapSet.new([char_code])}
         code_set -> {word, MapSet.put(code_set, char_code)}
       end)
@@ -80,7 +81,8 @@ defmodule Gimel do
   defp intersect_results(result_set, inverted_index, words) do
     Enum.reduce_while(words, result_set, fn word, result_set ->
       result_set =
-        Map.get(inverted_index, word, %MapSet{})
+        inverted_index
+        |> Map.get(word, %MapSet{})
         |> MapSet.intersection(result_set)
 
       case MapSet.size(result_set) do

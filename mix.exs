@@ -23,6 +23,7 @@ defmodule Gimel.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
       {:cowboy, "~> 2.6.3"},
       {:plug, "~> 1.8.0"},
       {:plug_cowboy, "~> 2.0.2"}

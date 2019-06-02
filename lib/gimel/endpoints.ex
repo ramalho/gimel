@@ -1,4 +1,7 @@
 defmodule Gimel.Endpoints do
+  @moduledoc """
+  HTTP API Endpoint for searching
+  """
   import Plug.Conn
 
   @indices Gimel.load_data()
