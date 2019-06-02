@@ -55,7 +55,7 @@ defmodule Gimel do
   @unicodedata File.read!("priv/UnicodeData.txt")
                |> String.trim()
                |> String.split(["\n", "\r", "\r\n"])
-  def load_data() do
+  def load_data do
     build_indexes(@unicodedata)
   end
 
