@@ -53,8 +53,8 @@ defmodule GimelTest do
                |> String.trim()
                |> String.split(["\n", "\r", "\r\n"])
 
-  test "build_indices" do
-    {word_idx, code_idx} = Gimel.build_indices(@sample_data)
+  test "build_indexes" do
+    {word_idx, code_idx} = Gimel.build_indexes(@sample_data)
     assert code_idx[?7] == "DIGIT SEVEN"
     assert word_idx["SEVEN"] == MapSet.new([?7])
     assert word_idx["DIGIT"] == MapSet.new([?7, ?8, ?9])
@@ -62,14 +62,14 @@ defmodule GimelTest do
   end
 
   test "search: single words" do
-    {word_idx, _code_idx} = Gimel.build_indices(@sample_data)
+    {word_idx, _code_idx} = Gimel.build_indexes(@sample_data)
     assert Gimel.search(word_idx, "COLON") == [?:]
     assert Gimel.search(word_idx, "DIGIT") == [?7, ?8, ?9]
     assert Gimel.search(word_idx, "DOESNOTEXIST") == []
   end
 
   test "search: multiple words" do
-    {word_idx, _code_idx} = Gimel.build_indices(@sample_data)
+    {word_idx, _code_idx} = Gimel.build_indexes(@sample_data)
     assert Gimel.search(word_idx, "SEVEN DIGIT") == [?7]
     assert Gimel.search(word_idx, "SIGN THAN") == [?<, ?>]
     assert Gimel.search(word_idx, "DOES NOT EXIST") == []
@@ -77,7 +77,7 @@ defmodule GimelTest do
   end
 
   test "search: no words" do
-    {word_idx, _code_idx} = Gimel.build_indices(@sample_data)
+    {word_idx, _code_idx} = Gimel.build_indexes(@sample_data)
     assert Gimel.search(word_idx, "") == []
     assert Gimel.search(word_idx, "-") == []
     assert Gimel.search(word_idx, "--") == []

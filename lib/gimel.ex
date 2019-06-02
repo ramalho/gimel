@@ -36,10 +36,10 @@ defmodule Gimel do
   end
 
   @doc """
-  Build indices: first maps each word to a set of characters,
+  Build indexes: first maps each word to a set of characters,
   second maps each character code to the character name.
   """
-  def build_indices(lines) do
+  def build_indexes(lines) do
     word_idx = %{}
     code_idx = %{}
     indexes = {word_idx, code_idx}
@@ -55,7 +55,7 @@ defmodule Gimel do
                |> String.trim()
                |> String.split(["\n", "\r", "\r\n"])
   def load_data() do
-    build_indices(@unicodedata)
+    build_indexes(@unicodedata)
   end
 
   @doc """
@@ -65,25 +65,28 @@ defmodule Gimel do
     search(inverted_index, tokenize(query))
   end
 
+  def search(_, []), do: []
+
   def search(inverted_index, [first | rest]) do
-    result_set = inverted_index[first]
-
-    if result_set do
-      Enum.reduce_while(rest, result_set, fn word, result_set ->
-        new_set = inverted_index[word] || %MapSet{}
-        result_set = MapSet.intersection(result_set, new_set)
-
-        if MapSet.size(result_set) > 0 do
-          {:cont, result_set}
-        else
-          {:halt, []}
-        end
-      end)
-      |> Enum.sort()
-    else
-      []
-    end
+    inverted_index[first]
+    |> intersect_results(inverted_index, rest)
+    |> Enum.sort()
   end
 
-  def search(_, []), do: []
+  defp intersect_results(nil, _index, _words), do: %MapSet{}
+
+  defp intersect_results(result_set, _index, []), do: result_set
+
+  defp intersect_results(result_set, inverted_index, words) do
+    Enum.reduce_while(words, result_set, fn word, result_set ->
+      result_set =
+        Map.get(inverted_index, word, %MapSet{})
+        |> MapSet.intersection(result_set)
+
+      case MapSet.size(result_set) do
+        0 -> {:halt, result_set}
+        _ -> {:cont, result_set}
+      end
+    end)
+  end
 end
